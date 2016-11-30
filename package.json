@@ -1,0 +1,21 @@
+{
+  "name": "ibot",
+  "version": "1.0.0",
+  "description": "A generic bot wrapper",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demsking/ibot.git"
+  },
+  "keywords": [
+    "bot",
+    "ibot"
+  ],
+  "author": "Sébastien Demanou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/demsking/ibot/issues"
+  },
+  "homepage": "https://github.com/demsking/ibot#readme"
+}
