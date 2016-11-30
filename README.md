@@ -1,45 +1,57 @@
-# bot-interface-socket.io
+# ibot
 
-A socket interface for your bot (ibot)
+
 
 ## Install
 
 ```sh
-npm install --save bot-interface-socket.io
+npm install --save ibot
 ```
 
 ## Usage
 
+The `bot.js` module:
+
 ```js
-// server.js
+const ibot = require('ibot')
 
-const iSocketIO = require('bot-interface-socket.io')
-const bot = require('./lib/your-ibot')
-
-bot.configure({
-    interface: iSocketIO
+module.exports = ibot.extend({
+    created () {
+        console.log('created')
+    },
+    
+    ready () {
+        this.hello()
+    },
+    
+    exit () {
+        this.stream.println('See you!')
+    },
+    
+    hooks: {
+        hello () {
+            this.stream.println('Hello!')
+            this.getUserName()
+        },
+        getUserName () {
+            this.stream.ask('What is your name?', /\w+/)
+                .then((anwser) => this.sayHelloUser(anwser))
+                .catch((e) => {
+                    this.stream.println('Sorry, I didn\'t catch what you write')
+                    this.getUserName()
+                })
+        },
+        sayHelloUser (username) {
+            this.stream.println(`Nice to meet you ${username}`)
+        }
+    }
 })
-
-process.on('SIGINT', () => {
-    bot.exit()
-    process.exit()
-});
-
-bot.run()
 ```
 
-```js
-// index.html
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io('http://localhost:9911');
-  socket.on('message', function (message) {
-    console.log(data);
-    socket.emit('data', 'hello');
-  });
-</script>
-```
+Then use an `ibot interface` to run your bot:
+- [ibot-interface-console](https://github.com/demsking/ibot-interface-console)
+- [ibot-interface-socket](https://github.com/demsking/ibot-interface-socket)
+- [ibot-interface-socket.io](https://github.com/demsking/ibot-interface-socket.io)
 
 ## License
 
